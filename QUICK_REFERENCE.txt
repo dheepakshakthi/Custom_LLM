@@ -1,0 +1,156 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                  COGNI-MAMBA CHATBOT - QUICK REFERENCE                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📋 SETUP (First Time)
+═══════════════════════════════════════════════════════════════════════════
+  .\setup.ps1                          # Automated setup
+  
+  OR manually:
+  .\master\Scripts\Activate.ps1        # Activate virtual environment
+  pip install -r requirements.txt      # Install dependencies
+
+═══════════════════════════════════════════════════════════════════════════
+🧪 TEST MODEL
+═══════════════════════════════════════════════════════════════════════════
+  python test_model.py                 # Verify everything works
+
+═══════════════════════════════════════════════════════════════════════════
+🎓 TRAINING
+═══════════════════════════════════════════════════════════════════════════
+  python train.py                      # Train the model (30-60 min GPU)
+
+  Training outputs:
+  - checkpoints/best_model.pt          # Best model (use this for chatbot)
+  - checkpoints/checkpoint_epoch_*.pt  # Per-epoch checkpoints
+  - checkpoints/checkpoint_step_*.pt   # Per-step checkpoints
+
+═══════════════════════════════════════════════════════════════════════════
+💬 CHATBOT
+═══════════════════════════════════════════════════════════════════════════
+  python chatbot.py                    # Interactive chat
+  python demo.py                       # Quick demo with test prompts
+
+  Chatbot commands:
+  - quit/exit   → Exit chatbot
+  - clear       → Clear conversation history
+  - history     → Show conversation history
+
+═══════════════════════════════════════════════════════════════════════════
+⚙️ CONFIGURATION (config.json)
+═══════════════════════════════════════════════════════════════════════════
+  KEY PARAMETERS:
+  
+  dim               → Model dimension (768/1024/1280)
+  n_layers          → Transformer layers (8/12/16)
+  max_seq_len       → Sequence length (256/512/1024)
+  batch_size        → Batch size (2/4/8)
+  learning_rate     → Learning rate (1e-4 to 5e-4)
+  max_epochs        → Training epochs (3-10)
+
+═══════════════════════════════════════════════════════════════════════════
+🎚️ MEMORY PROFILES
+═══════════════════════════════════════════════════════════════════════════
+  LOW (4GB GPU):
+  {"dim": 768, "n_layers": 8, "batch_size": 2, "max_seq_len": 256}
+  
+  MEDIUM (6-8GB GPU) - DEFAULT:
+  {"dim": 1024, "n_layers": 12, "batch_size": 4, "max_seq_len": 512}
+  
+  HIGH (12GB+ GPU):
+  {"dim": 1280, "n_layers": 16, "batch_size": 8, "max_seq_len": 1024}
+
+═══════════════════════════════════════════════════════════════════════════
+📊 DATASETS
+═══════════════════════════════════════════════════════════════════════════
+  TinyStories (default):    Simple, clean text
+  code_search_net:          Python code (Phi-1 style)
+  Custom:                   Edit data_loader.py
+
+  Change in train.py:
+  dataset_name='tinystories'  or  'code_search_net'
+
+═══════════════════════════════════════════════════════════════════════════
+🐛 COMMON ISSUES
+═══════════════════════════════════════════════════════════════════════════
+  OUT OF MEMORY:
+  → Reduce batch_size to 2
+  → Reduce max_seq_len to 256
+  → Reduce dim to 768
+  
+  SLOW TRAINING:
+  → Check CUDA: python -c "import torch; print(torch.cuda.is_available())"
+  → Reduce max_train_samples in train.py
+  
+  POOR RESPONSES:
+  → Train longer (more epochs)
+  → Use more/better training data
+  → Lower temperature (0.6-0.7 for focused responses)
+  
+  INSTALLATION ISSUES:
+  → Install PyTorch first separately
+  → Update pip: python -m pip install --upgrade pip
+
+═══════════════════════════════════════════════════════════════════════════
+📈 EXPECTED PERFORMANCE
+═══════════════════════════════════════════════════════════════════════════
+  MODEL SIZE:       ~168M parameters (0.17B)
+  TRAINING TIME:    30-60 min (GPU) / 4-6 hours (CPU)
+  MEMORY USAGE:     1-2GB during inference
+  DISK SIZE:        ~650MB (FP32) / ~325MB (FP16)
+
+═══════════════════════════════════════════════════════════════════════════
+🔥 OPTIMIZATION FEATURES
+═══════════════════════════════════════════════════════════════════════════
+  ✓ Mixed Precision (FP16)      → 50% memory reduction
+  ✓ Gradient Accumulation       → Simulate larger batches
+  ✓ Grouped-Query Attention     → 2-3x faster
+  ✓ Flash Attention             → Efficient computation
+  ✓ Weight Tying                → 20% fewer parameters
+  ✓ RMSNorm                     → Faster than LayerNorm
+  ✓ SwiGLU Activation           → Better than ReLU
+
+═══════════════════════════════════════════════════════════════════════════
+📁 KEY FILES
+═══════════════════════════════════════════════════════════════════════════
+  LLM_architecture_168.py       → Model architecture
+  config.json                   → Configuration
+  train.py                      → Training script
+  chatbot.py                    → CLI chatbot
+  test_model.py                 → Architecture test
+  demo.py                       → Quick demo
+
+═══════════════════════════════════════════════════════════════════════════
+📚 DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════
+  README.md                     → Project overview
+  quick_start.md                → Detailed setup guide
+  IMPLEMENTATION_GUIDE.md       → Complete implementation guide
+
+═══════════════════════════════════════════════════════════════════════════
+🎯 WORKFLOW
+═══════════════════════════════════════════════════════════════════════════
+  1. .\setup.ps1               # Setup environment
+  2. python test_model.py      # Test architecture
+  3. python train.py           # Train model
+  4. python chatbot.py         # Use chatbot
+  
+  OR
+  
+  4. python demo.py            # Quick demo first
+
+═══════════════════════════════════════════════════════════════════════════
+💡 PRO TIPS
+═══════════════════════════════════════════════════════════════════════════
+  → Start with small dataset (1000 samples) to test
+  → Monitor training loss (should decrease steadily)
+  → Save checkpoints regularly (automatic)
+  → Experiment with generation parameters (temperature, top_k, top_p)
+  → Use GPU for 10-50x speedup
+  → Quality data > quantity
+
+═══════════════════════════════════════════════════════════════════════════
+
+Need help? Check IMPLEMENTATION_GUIDE.md or quick_start.md
+
+Happy chatting! 🤖✨
