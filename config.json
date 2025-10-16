@@ -11,7 +11,7 @@
   "mixed_precision": true,
   "norm_eps": 1e-6,
   "learning_rate": 3e-4,
-  "max_epochs": 4,
+  "max_epochs": 35,
   "warmup_steps": 1000,
   "weight_decay": 0.1,
   "grad_clip": 1.0,

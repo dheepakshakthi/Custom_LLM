@@ -266,8 +266,8 @@ def main():
         config=config,
         dataset_name='oasst',  # OpenAssistant conversations (best for chatbot)
         # Other options: 'dolly', 'alpaca', 'tinystories', 'code_search_net'
-        max_train_samples=20000,  # OpenAssistant has good quality data
-        max_val_samples=2000
+        max_train_samples=50000,  # OpenAssistant has good quality data
+        max_val_samples=5000
     )
     
     # Update vocab size if using SimpleTokenizer
