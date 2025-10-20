@@ -1,2 +1,65 @@
+# Python
 master
-__pycache__
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Environment files
+.env
+
+# Training outputs
+checkpoints/
+training_outputs/
+training_stats/
+cache/
+*.pt
+*.pth
+*.ckpt
+
+# Datasets (large files)
+archive/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Development images
+dev_images
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Training plots
+*.png
+*.jpg
+*.jpeg
+
+# Temporary files
+*.tmp
+*.temp\
