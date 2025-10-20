@@ -1,3 +1,7 @@
 master
 __pycache__
 checkpoints
+dev_images
+training_stats
+archive
+cache
